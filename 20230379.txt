@@ -1,0 +1,79 @@
+public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome to Our Program");
+        System.out.println("Let's Manage the day..");
+        System.out.println("------------------------------");
+
+        System.out.print("Number of Fields you need: ");
+        int nFields = scanner.nextInt();
+        scanner.nextLine();
+
+        List<Field> fields = new ArrayList<>(nFields);
+
+        for (int i = 0; i < nFields; i++) {
+            System.out.print("Enter Name for field " + (i + 1) + ": ");
+            String fieldName = scanner.nextLine();
+            Field field = new Field();
+            field.setFieldName(fieldName);
+
+            System.out.println("Setting up " + fieldName + " field: ");
+            field.setField();
+            fields.add(field);
+        }
+
+        while (true) {
+            printTable(fields);
+
+            System.out.println("\nMenu:");
+            System.out.println("1. Add Task");
+            System.out.println("2. Remove Task");
+            System.out.println("3. Show Fields");
+            System.out.println("4. Show All Tasks");
+            System.out.println("0. Exit");
+            System.out.print("Choose an option: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            if (choice == 0) break;
+
+            if (choice == 3) {
+                System.out.println("\nList of Fields:");
+                for (int i = 0; i < fields.size(); i++) {
+                    System.out.println((i + 1) + ". " + fields.get(i).getFieldName());
+                }
+                continue;
+            }
+
+            if (choice == 4) {
+                System.out.println("\nAll Tasks:");
+                for (Field field : fields) {
+                    System.out.println("Field: " + field.getFieldName());
+                    for (String task : field.getTasks()) {
+                        System.out.println(" - " + task);
+                    }
+                    System.out.println("----------------------");
+                }
+                continue;
+            }
+
+            System.out.print("Enter field index (1 to " + fields.size() + "): ");
+            int fieldIndex = scanner.nextInt();
+            scanner.nextLine();
+
+            if (fieldIndex < 1 || fieldIndex > fields.size()) {
+                System.out.println("Invalid field index.");
+                continue;
+            }
+
+            if (choice == 1) {
+                fields.get(fieldIndex - 1).addTask();
+            } else if (choice == 2) {
+                fields.get(fieldIndex - 1).removeTask();
+            } else {
+                System.out.println("Invalid option.");
+            }
+        }
+
+        System.out.println("Program exited.");
+    }

@@ -1,0 +1,152 @@
+public static void main(String[] args) {
+        int optionMain;
+        System.out.println("------------------------------\n");
+       System.out.println("    Ahlan ya user ya habibi\n");
+       System.out.println("-------------------------------\n");
+
+        MAIN_MENU:
+        while (true) {
+            
+            System.out.println("What do you like to do today?");
+            System.out.println("1 - Cipher a message");
+            System.out.println("2 - Decipher a message");
+            System.out.println("3 - Exit");
+            System.out.print("Enter your choice: ");
+            if (input.hasNextInt()) {
+                optionMain = input.nextInt();
+                input.nextLine(); // Consume newline
+
+                if (optionMain == 1) {
+                    // encryption logic
+                    String messageCipher;
+                    int mainChoice;
+
+                    System.out.println("Welcome to Encryption Program");
+                    System.out.println("Please enter the message to cipher");
+
+                    messageCipher = input.nextLine();
+
+
+                    while(true){
+                        System.out.println("\n1-Affine Cipher");
+                        System.out.println("2-Morse Cipher");
+                        System.out.println("3-Route Cipher");
+                        System.out.println("4-Back");
+                        System.out.print("Enter your choice: ");
+                        
+
+                        if(input.hasNextInt()){
+                            mainChoice = input.nextInt();
+                            input.nextLine();
+
+                            if(mainChoice == 1){
+                                affineCipherEncrypt(messageCipher);
+                            } else if(mainChoice == 2){
+                                System.out.print("Encrypted Message: ");
+                                morseCipher(messageCipher);
+                            } else if(mainChoice == 3){
+                                System.out.print("Enter Key: ");
+                                if(input.hasNextInt()){
+                                    int key = input.nextInt();
+                                    input.nextLine();
+
+                                    if (!validateKey(messageCipher, key)) {
+                                        System.out.println("Key is too large. Please enter a valid key.");
+                                        continue; // Stay in the loop
+                                    }
+                                    System.out.print("Encrypted Message: ");
+                                    routeCipher(messageCipher, key);
+                                } else {
+                                    System.out.println("Invalid key. Please enter a number.");
+                                    input.next(); // Consume invalid input
+                                }
+                            } else if (mainChoice == 4){
+                                System.out.println("Back to Main Menu.\n");
+                                System.out.println("-------------------------------------\n");
+                                continue MAIN_MENU; // Exit the inner loop
+                            } else {
+                                System.out.println("Invalid option. Please choose again.");
+                            }
+                            } else {
+                                System.out.println("Invalid input. Please enter a number.");
+                                input.next(); // Consume invalid input
+                            }
+                        }
+
+
+                    //encryptMain();
+                } else if (optionMain == 2) {
+                    // decryption logic
+                    String messageDecipher;
+                    int mainChoice;
+
+                    System.out.println("Welcome to Decryption program");
+                    System.out.print("Please Enter the message to decipher: ");
+                    messageDecipher = input.nextLine(); // Read full input line
+
+
+                    while (true) {
+                        System.out.println("\n1-Affine Decipher");
+                        System.out.println("2-Morse Decipher");
+                        System.out.println("3-Route Decipher");
+                        System.out.println("4-Back");
+                        System.out.print("Enter your choice: ");
+                        
+                        if (input.hasNextInt()) {
+                            mainChoice = input.nextInt();
+                            input.nextLine(); // Consume leftover newline
+                        } else {
+                            System.out.println("Invalid input! Please enter a number.");
+                            input.next(); // Consume invalid input
+                            continue;
+                        }
+
+                        if (mainChoice == 1) {
+                            affineCipherDecrypt(messageDecipher);
+                        } 
+                        else if (mainChoice == 2) {
+                            morseDecipher(messageDecipher);
+                        } 
+                        else if (mainChoice == 3) {
+                            int key;
+                            System.out.print("Enter Key: ");
+                            
+                            while (!input.hasNextInt()) {
+                                System.out.println("Invalid key! Please enter a number.");
+                                input.next(); // Consume invalid input
+                            }
+                            key = input.nextInt();
+                            input.nextLine(); // Consume leftover newline
+
+                            while (!validateKey(messageDecipher, key)) {
+                                System.out.print("Key is too large. Please enter a valid key: ");
+                                key = input.nextInt();
+                                input.nextLine(); // Consume newline
+                            }
+                            routeDecipher(messageDecipher, key);
+                        } 
+                        else if (mainChoice == 4) {
+                            System.out.println("Back to Main Menu.\n");
+                            System.out.println("-------------------------------------\n");
+                            continue MAIN_MENU; // Exit the inner loop
+                        } 
+                        else {
+                            System.out.println("Invalid option. Please choose again.");
+                        }
+                    }
+                    
+                } else if (optionMain == 3) {
+                    System.out.println("Thanks for using our program!");
+                    break;
+                } else {
+                    System.out.println("Invalid option. Please enter a number between 1 and 3.");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                input.next(); // Consume invalid input
+            }
+        }
+
+        input.close();
+    }
+ }
